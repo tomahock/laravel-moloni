@@ -183,6 +183,22 @@ class MoloniAuthenticatorTest extends TestCase
         $this->assertSame('auth_code_abc', $query['code']);
     }
 
+    public function test_authorization_callback_caches_tokens(): void
+    {
+        $auth = $this->makeAuthenticator([
+            $this->jsonResponse([
+                'access_token' => 'code_access',
+                'expires_in' => 3600,
+                'refresh_token' => 'code_refresh',
+            ]),
+        ]);
+
+        $auth->handleAuthorizationCallback('auth_code_abc');
+
+        $this->assertSame('code_access', Cache::get('moloni_token_access_token'));
+        $this->assertSame('code_refresh', Cache::get('moloni_token_refresh_token'));
+    }
+
     public function test_authorization_callback_throws_when_code_rejected(): void
     {
         $auth = $this->makeAuthenticator([

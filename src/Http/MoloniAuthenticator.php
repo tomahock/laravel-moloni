@@ -50,13 +50,17 @@ class MoloniAuthenticator
 
     public function handleAuthorizationCallback(string $code): array
     {
-        return $this->requestToken([
+        $tokens = $this->requestToken([
             'grant_type' => 'authorization_code',
             'client_id' => $this->config['client_id'],
             'client_secret' => $this->config['client_secret'],
             'redirect_uri' => $this->config['redirect_uri'],
             'code' => $code,
         ]);
+
+        $this->cacheTokens($tokens);
+
+        return $tokens;
     }
 
     public function forgetTokens(): void
