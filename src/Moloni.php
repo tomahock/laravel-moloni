@@ -11,7 +11,9 @@ use Tomahock\Moloni\Resources\CreditNotes;
 use Tomahock\Moloni\Resources\Currencies;
 use Tomahock\Moloni\Resources\Customers;
 use Tomahock\Moloni\Resources\DebitNotes;
+use Tomahock\Moloni\Resources\DeliveryMethods;
 use Tomahock\Moloni\Resources\DeliveryNotes;
+use Tomahock\Moloni\Resources\MaturityDates;
 use Tomahock\Moloni\Resources\DocumentSets;
 use Tomahock\Moloni\Resources\Estimates;
 use Tomahock\Moloni\Resources\InvoiceReceipts;
@@ -147,6 +149,16 @@ class Moloni
     public function paymentMethods(): PaymentMethods
     {
         return new PaymentMethods($this->client);
+    }
+
+    public function maturityDates(): MaturityDates
+    {
+        return new MaturityDates($this->client);
+    }
+
+    public function deliveryMethods(): DeliveryMethods
+    {
+        return new DeliveryMethods($this->client);
     }
 
     public function warehouses(): Warehouses
